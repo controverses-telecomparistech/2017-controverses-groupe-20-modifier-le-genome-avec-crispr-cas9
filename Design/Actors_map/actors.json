@@ -32,6 +32,7 @@
    "children": [
     {"name": "Monsanto", "size": 1616},
     {"name": "The Parker Fundation", "size": 1027}
+    {"name":"Start-up","size":1617}
    ]
   },
   {
@@ -57,7 +58,7 @@
   {
    "name": "Science",
    "children": [
-    {"name": "S.Doudna", "size": 16540},
+    {"name": "J.Doudna", "size": 16540},
     {"name": "E.Charpentier", "size": 16540},
     {"name": "INRA", "size": 16540},
     {"name": "Nature", "size": 16540},
