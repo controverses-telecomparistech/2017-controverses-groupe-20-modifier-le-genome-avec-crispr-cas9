@@ -29,10 +29,42 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <style type="text/css">
+
+path.arc {
+  cursor: move;
+  fill: #18BC9C;
+  color : #fff;
+}
+
+.node circle {
+  fill: #2C3E50;
+  stroke: #2C3E50;
+  stroke-width: 10px;
+  color : #fff;
+}
+
+.node {
+  font-size: 12px;
+  font-weight: bold;
+  pointer-events: none;
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color :  #fff;
+  
+}
+
+.link {
+  fill: none;
+  stroke: #2C3E50;
+  stroke-width: 10px;
+}
+
+    </style>
 
 </head>
 
-<body id="page-top" class="index">
+<body id="page-top" class="index" style="overflow : auto;" >
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 
     <!-- Navigation -->
@@ -86,101 +118,147 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
+    
+    <section  class="success" style="text-align: center;">
+    <div class="container">
+    <h4>Cartographie des acteurs</h4>
+    <div id="actors_map" style="vertical-align : middle;">
+    <script type="text/javascript" src="Actors_map/d3/d3.js"></script>
+    <script type="text/javascript" src="Actors_map/d3/d3.layout.js"></script>
+    <script type="text/javascript" src="Actors_map/packages.js"></script>
+    <link type="text/css" rel="stylesheet" href="Actors_map/style.css"/>
+    
+    
+    <script type="text/javascript">
+
+var w = screen.width*0.8,
+    h = screen.height*0.8,
+    rx = w / 2,
+    ry = h / 2,
+    m0,
+    rotate = 0;
+
+var cluster = d3.layout.cluster()
+    .size([360, ry - 120])
+    .sort(null);
+
+var diagonal = d3.svg.diagonal.radial()
+    .projection(function(d) {if(d.children){return [ d.y*0.7, d.x / 180 * Math.PI]; } else {return [ d.y, d.x / 180 * Math.PI]; }});
+
+var svg = d3.select("#actors_map").append("div")
+    .style("width", "70%")
+    .style("height","70%")
+    .style("background-color", "#18BC9C")
+    .style("display","block");
+        
+        
+
+var vis = svg.append("svg:svg")
+    .attr("width", w)
+    .attr("height", w)
+  .append("svg:g")
+    .attr("transform", "translate(" + rx + "," + ry + ")");
+
+vis.append("svg:path")
+    .attr("class", "arc")
+    .attr("d", d3.svg.arc().innerRadius(ry - 120).outerRadius(ry).startAngle(0).endAngle(2 * Math.PI))
+    .on("mousedown", mousedown);
+
+d3.json("Actors_map/actors.json", function(json) {
+  var nodes = cluster.nodes(json);
+
+  var link = vis.selectAll("path.link")
+      .data(cluster.links(nodes))
+    .enter().append("svg:path")
+      .attr("class", "link")
+      .attr("d", diagonal);
+
+  var node = vis.selectAll("g.node")
+      .data(nodes)
+    .enter().append("svg:g")
+      .attr("class", "node")
+      .attr("transform", function(d) {if (d.children){return "rotate(" + (d.x - 90) + ")translate(" + d.y*0.7 + ")"; } else { return "rotate(" + (d.x - 90) + ")translate(" + d.y+ ")"; }})
+
+  node.append("svg:circle")
+      .attr("r", 3);
+
+  node.append("svg:text")
+      .attr("dx", function(d) { return d.x < 180 ? 8 : -8; })
+      .attr("dy", ".31em")
+      .attr("text-anchor", function(d) {return d.x < 180 ? "start" : "end"; })
+      .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })
+      .style("fill","white")
+      .html(function(d) {                       
+                         return d.name});
+});
+
+d3.select(window)
+    .on("mousemove", mousemove)
+    .on("mouseup", mouseup);
+
+function mouse(e) {
+  return [e.pageX - rx, e.pageY - ry];
+}
+
+function mousedown() {
+  m0 = mouse(d3.event);
+  d3.event.preventDefault();
+}
+
+function mousemove() {
+  if (m0) {
+    var m1 = mouse(d3.event),
+        dm = Math.atan2(cross(m0, m1), dot(m0, m1)) * 180 / Math.PI,
+        tx = "translate3d(0," + (ry - rx) + "px,0)rotate3d(0,0,0," + dm + "deg)translate3d(0," + (rx - ry) + "px,0)";
+    svg
+        .style("-moz-transform", tx)
+        .style("-ms-transform", tx)
+        .style("-webkit-transform", tx);
+  }
+}
+
+function mouseup() {
+  if (m0) {
+    var m1 = mouse(d3.event),
+        dm = Math.atan2(cross(m0, m1), dot(m0, m1)) * 180 / Math.PI,
+        tx = "rotate3d(0,0,0,0deg)";
+
+    rotate += dm;
+    if (rotate > 360) rotate -= 360;
+    else if (rotate < 0) rotate += 360;
+    m0 = null;
+
+    svg
+        .style("-moz-transform", tx)
+        .style("-ms-transform", tx)
+        .style("-webkit-transform", tx);
+
+    vis
+        .attr("transform", "translate(" + rx + "," + ry + ")rotate(" + rotate + ")")
+      .selectAll("g.node text")
+        .attr("dx", function(d) { return (d.x + rotate) % 360 < 180 ? 8 : -8; })
+        .attr("text-anchor", function(d) { return (d.x + rotate) % 360 < 180 ? "start" : "end"; })
+        .attr("transform", function(d) { return (d.x + rotate) % 360 < 180 ? null : "rotate(180)"; });
+  }
+}
+
+function cross(a, b) {
+  return a[0] * b[1] - a[1] * b[0];
+}
+
+function dot(a, b) {
+  return a[0] * b[0] + a[1] * b[1];
+}
 
 
-    <!-- Header -->
-    <header>
-        <div class="container" id="maincontent" tabindex="-1">
-            <div class="row">
-                <div class="col-lg-12">
-                    <img class="img-responsive" src="img/profile.png" alt="">
-                    <div class="intro-text">
-                        <h1 class="name">Start Bootstrap</h1>
-                        <hr class="star-light">
-                        <span class="skills">Web Developer - Graphic Artist - User Experience Designer</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Portfolio Grid Section -->
-    <section id="portfolio">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>Portfolio</h2>
-                    <hr class="star-primary">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/cabin.png" class="img-responsive" alt="Cabin">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/cake.png" class="img-responsive" alt="Slice of cake">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal3" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/circus.png" class="img-responsive" alt="Circus tent">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/game.png" class="img-responsive" alt="Game controller">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal5" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/safe.png" class="img-responsive" alt="Safe">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal6" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <img src="img/portfolio/submarine.png" class="img-responsive" alt="Submarine">
-                    </a>
-                </div>
-            </div>
+    </script>
+    </div>
         </div>
     </section>
-
+        
     <!-- About Section -->
-    <section class="success" id="about">
-        <div class="container">
+    <section class="success" id="about" >
+        <div class="container" style="width:70%">
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2>About</h2>
@@ -201,6 +279,7 @@
                 </div>
             </div>
         </div>
+        </section>
     </section>
 
     <!-- Contact Section -->
