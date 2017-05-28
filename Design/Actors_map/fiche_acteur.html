@@ -14,16 +14,11 @@
                 var parsedCSV = psv.parseRows(data);
                 var container = d3.select("body");
                 n = parsedCSV.length;
-                var actor = 1;
+                var actor = 2;
                 for(var i = 1;i<n;i++){
-                    if(parsedCSV[actor][i].length!=0)
-                    var line = container.append("p");
-                                
-                    
-                    var label = line.append("strong")
-                                .text(parsedCSV[i][0]);
-                    
-                    line.text(parsedCSV[i][actor]);
+                    if(parsedCSV[i][actor].length!=0)
+                    var line = container.append("p")
+                                .html("<strong>"+parsedCSV[i][0]+"</strong> : "+parsedCSV[i][actor]);
                 }
             });
 </script>
