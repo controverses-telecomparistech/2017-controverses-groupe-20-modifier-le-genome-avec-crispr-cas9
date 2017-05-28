@@ -2,102 +2,91 @@
 <meta charset="utf-8">
 <head>
 <link rel="stylesheet" type="text/css" href="timeline.css">
+<script type="text/javascript" src="../d3/d3.min.js"></script>
 </head>
 <body>
 <div class="container">
 	<div class="row">
-		<div class="timeline-centered">
+		<div class="timeline-centered" id="timeline">
     
-	<article class="timeline-entry">
+	<article class="timeline-entry left-aligned">
 		
 		<div class="timeline-entry-inner">
-			<time class="timeline-time" datetime="2014-01-10T03:45"><span>03:45 AM</span> <span>Today</span></time>
+			<time class="timeline-time"><span>1975</span></time>
 			
 			<div class="timeline-icon bg-success">
 				<i class="entypo-feather"></i>
 			</div>
 			
 			<div class="timeline-label">
-				<h2><a href="#">Art Ramadani</a> <span>posted a status update</span></h2>
-				<p>Tolerably earnestly middleton extremely distrusts she boy now not. Add and offered prepare how cordial two promise. Greatly who affixed suppose but enquire compact prepare all put. Added forth chief trees but rooms think may.</p>
+				<h2>Conference d'Asilomar</h2>
+				<p>La conference d'Asilomar a ete organisee en 1974 par Paul Berg (futur prix Nobel de chimie en 1980). Elle appelait : un moratoire sur les manipulations genetiques, afin d'eviter que des bacteries genetiquement modifiees puissent se disperser dans l'environnement</p>
 			</div>
 		</div>
 		
 	</article>
 	
-	
-	<article class="timeline-entry left-aligned">
-		
-		<div class="timeline-entry-inner">
-			<time class="timeline-time" datetime="2014-01-10T03:45"><span>03:45 AM</span> <span>Today</span></time>
-			
-			<div class="timeline-icon bg-secondary">
-				<i class="entypo-suitcase"></i>
-			</div>
-			
-			<div class="timeline-label">
-				<h2><a href="#">Job Meeting</a></h2>
-				<p>You have a meeting at <strong>Laborator Office</strong> Today.</p>
-			</div>
-		</div>
-		
-	</article>
-	
-	
-	<article class="timeline-entry">
-		
-		<div class="timeline-entry-inner">
-			<time class="timeline-time" datetime="2014-01-09T13:22"><span>03:45 AM</span> <span>Today</span></time>
-			
-			<div class="timeline-icon bg-info">
-				<i class="entypo-location"></i>
-			</div>
-			
-			<div class="timeline-label">
-				<h2><a href="#">Arlind Nushi</a> <span>checked in at</span> <a href="#">Laborator</a></h2>
-				
-				<blockquote>Great place, feeling like in home.</blockquote>
-				
-				
-			</div>
-		</div>
-		
-	</article>
-	
-	
-	<article class="timeline-entry left-aligned">
-		
-		<div class="timeline-entry-inner">
-			<time class="timeline-time" datetime="2014-01-10T03:45"><span>03:45 AM</span> <span>Today</span></time>
-			
-			<div class="timeline-icon bg-warning">
-				<i class="entypo-camera"></i>
-			</div>
-			
-			<div class="timeline-label">
-				<h2><a href="#">Arber Nushi</a> <span>changed his</span> <a href="#">Profile Picture</a></h2>
-				
-				<blockquote>Pianoforte principles our unaffected not for astonished travelling are particular.</blockquote>
-				
-			</div>
-		</div>
-		
-	</article>
-	
-	
-	<article class="timeline-entry begin">
-	
-		<div class="timeline-entry-inner">
-			
-			<div class="timeline-icon" style="-webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg);">
-				<i class="entypo-flight"></i>
-			</div>
-			
-		</div>
-		
-	</article>
 	
 </div>
 	</div>
 </div>
 </body>
+
+<script type="text/javascript">
+            d3.text("timeline.csv", function(data) {
+                var psv = d3.dsvFormat(";");
+                var parsedCSV = psv.parseRows(data);
+                var timeline = d3.select("#timeline");
+                n = parsedCSV[1].length;
+                var opinion;
+                for(var i =1;i<n;i++){
+                  for(var j =2;j<6;j++){
+                      if(parsedCSV[j][i].length!=0){
+                          opinion = j-2;
+                      }
+                  }
+                  var article = timeline.append("article")
+                                .attr("class",function(){if(opinion<2){ return "timeline-entry";}else {
+                                    return "timeline-entry left-aligned";
+                                };});
+                  var content = article.append("div")
+                                    .attr("class","timeline-entry-inner");
+                  var time = content.append("time")
+                            .attr("class","timeline-time")
+                            .append("span")
+                            .text(parsedCSV[1][i]);
+                  var icon = content.append("div")
+                            .attr("class","timeline-icon")
+                            .style("background-color",function(){
+                                switch(opinion){
+                                    case 0:
+                                        return "#00a651";
+                                        break;
+                                    case 1:
+                                        return "#bcf442";
+                                        break;
+                                    case 2:
+                                        return "#f4a142";
+                                        break;
+                                    case 3:
+                                        return "#cc2424";
+                                        break;
+                                    default:
+                                        console.log("case error");
+                                        
+                            }
+                            })
+                            .append("i")
+                            .attr("class","entypo-feather");
+                var label = content.append("div")
+                            .attr("class","timeline-label");
+                var title = label.append("h2")
+                            .text(parsedCSV[6][i]);
+                var description = label.append("p")
+                                    .text(parsedCSV[9][i]);
+                };  
+                   
+            });
+</script>
+        
+
