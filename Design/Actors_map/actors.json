@@ -43,7 +43,7 @@
     {"name": "Alliance Vita", "size": 17316}
     ]
     },
-    {"name": "Association religieuse", "size": 1316}
+    {"name": "Association religieuse", "size": 500}
     
    ]
   },
@@ -52,7 +52,7 @@
    "children": [
     {"name": "OMS", "size": 8258},
     {"name": "INSERM", "size": 10001},
-    {"name": "Green Peace", "size": 8217}
+    {"name": "GreenPeace", "size": 8217}
    ]
   },
   {
