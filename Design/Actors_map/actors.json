@@ -31,7 +31,7 @@
    "name": "Entreprise",
    "children": [
     {"name": "Monsanto", "size": 1616},
-    {"name": "The Parker Fundation", "size": 1027}
+    {"name": "The Parker Fundation", "size": 1027},
     {"name":"Start-up","size":1617}
    ]
   },
