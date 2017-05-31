@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Chronologie</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="css/freelancer.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/timeline.css">
+    <link rel="stylesheet" text="text/css" href="timeline.css">
+    <script type="text/javascript" src="Actors_map/d3/d3.min.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" class="index">
+<div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
+
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html">CRISPR-cas9</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="background-color: #2C3E50; color: white;"> Controverse<span class="caret"></span></a>
+
+                        <ul class="dropdown-menu">
+                            <li class="page-scroll">
+                                <a href="graphe.html">Arbre des débats</a>
+                            </li>
+                            <li class="page-scroll">
+                                <a href="timeline.html">Chronologie</a>
+                            </li>
+                            <li class="page-scroll">
+                                <a href="carte.html">Carte des acteurs</a>
+                            </li>
+                            
+
+                        </ul>
+                    </li><li class="page-scroll">
+                        <a href="enjeux.html">Enjeux</a>
+                    </li>
+                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="background-color: #2C3E50; color: white;"> Pour Aller plus loin<span class="caret"></span></a>
+
+                        <ul class="dropdown-menu">
+                            <li class="page-scroll">
+                                <a href="societe.html">Société civile</a>
+                            </li>
+                            <li class="page-scroll">
+                                <a href="politique.html">Politique et droit</a>
+                            </li>
+                            <li class="page-scroll">
+                                <a href="expertise.html">Expertise scientifique</a>
+                            </li>
+                            <li class="page-scroll">
+                                <a href="presse.html">Presse et média</a>
+                            </li>
+                            <li class="page-scroll">
+                                <a href="entretien.html">Entretiens</a>
+                            </li>
+                            
+
+                        </ul>
+                    </li>
+                    
+
+                    <li class="page-scroll">
+                        <a href="about.html">À propos</a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <header>
+        <div class="container">
+            <h1 class="text-center">
+                Chronologie
+            </h1>
+        </div>
+    </header>
+
+
+    <!-- Timeline -->
+
+    <div class="container">
+    <div class="row">
+        <div class="timeline-centered" id="timeline">
+
+
+    
+    
+        </div>
+    </div>
+    </div>
+</body>
+<script type="text/javascript">
+            d3.text("timeline.csv", function(data) {
+                var psv = d3.dsvFormat(";");
+                var parsedCSV = psv.parseRows(data);
+                var timeline = d3.select("#timeline");
+                n = parsedCSV[1].length;
+                var opinion;
+                for(var i =1;i<n;i++){
+                  for(var j =2;j<6;j++){
+                      if(parsedCSV[j][i].length!=0){
+                          opinion = j-2;
+                      }
+                  }
+                  var article = timeline.append("article")
+                                .attr("class",function(){if(opinion<2){ return "timeline-entry";}else {
+                                    return "timeline-entry left-aligned";
+                                };});
+                  var content = article.append("div")
+                                    .attr("class","timeline-entry-inner");
+                  var time = content.append("time")
+                            .attr("class","timeline-time")
+                            .append("span")
+                            .text(parsedCSV[1][i]);
+                  var icon = content.append("div")
+                            .attr("class","timeline-icon")
+                            .style("background-color",function(){
+                                switch(opinion){
+                                    case 0:
+                                        return "#00a651";
+                                        break;
+                                    case 1:
+                                        return "#bcf442";
+                                        break;
+                                    case 2:
+                                        return "#f4a142";
+                                        break;
+                                    case 3:
+                                        return "#cc2424";
+                                        break;
+                                    default:
+                                        console.log("case error");
+                                        
+                            }
+                            })
+                            .append("i")
+                            .attr("class","entypo-feather");
+                var label = content.append("div")
+                            .attr("class","timeline-label");
+                var title = label.append("h2")
+                            .text(parsedCSV[6][i]);
+                var description = label.append("p")
+                                    .text(parsedCSV[9][i]);
+                };  
+                   
+            });
+</script>
+    <!-- End of Timeline -->
+    
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-above">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col col-md-4">
+                        <h3>Location</h3>
+                        <p>3481 Melrose Place
+                            <br>Beverly Hills, CA 90210</p>
+                    </div>
+                    <div class="footer-col col-md-4">
+                        <h3>Around the Web</h3>
+                        <ul class="list-inline">
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Facebook</span><i class="fa fa-fw fa-facebook"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Google Plus</span><i class="fa fa-fw fa-google-plus"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Twitter</span><i class="fa fa-fw fa-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Linked In</span><i class="fa fa-fw fa-linkedin"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Dribble</span><i class="fa fa-fw fa-dribbble"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer-col col-md-4">
+                        <h3>About Freelancer</h3>
+                        <p>Freelance is a free to use, open source Bootstrap theme created by <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright &copy; Your Website 2016
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/freelancer.min.js"></script>
+
+</body>
+
+
+</html>

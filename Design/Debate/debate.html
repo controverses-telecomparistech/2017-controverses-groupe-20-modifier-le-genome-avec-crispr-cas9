@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<head>
+    <script type="text/javascript" src="d3/d3.min.js"></script>
+    <script type="text/javascript" src="d3/d3.js"></script>
+
+    <style>
+
+        .node {
+            stroke-width: 0.5px;
+        }
+
+        .link {
+            stroke: #808080;
+            stroke-opacity: .6;
+        }
+
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+
+    var width = document.documentElement.clientWidth,
+    height = document.documentElement.clientHeight,
+    color = function(d,i) {if(i==1){
+        return d3.hsl(205,1-(0.2+d.data.age*0.7),0.5,0.9);}else if(i==2){
+        return d3.hsl(120,1-(0.2+d.data.age*0.7),0.5,0.9);}else{
+            return d3.hsl(28,1-(0.2+d.data.age*0.7),0.5,0.9);
+        };}
+    var clickXIni=0,clickYIni=0;
+    var forceX=width / 2, forceY=height / 2;
+    var forceXIni=forceX, forceYIni=forceY;
+    var simulation = d3.forceSimulation()
+    .force("link",d3.forceLink().distance(function(d) {return d.length;}).strength(0.5))
+    .force("charge", d3.forceManyBody())
+    .force("center", d3.forceCenter(forceX, forceY))
+    
+    Array.prototype.SumArray = function (arr) {
+    var sum = [];
+    if (arr != null && this.length == arr.length) {
+        for (var i = 0; i < arr.length; i++) {
+            sum.push(this[i] + arr[i]);
+        }
+    }
+
+    return sum;
+}
+    
+    var label;
+    
+    var svg = d3.select("body").append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .call(d3.drag()
+        .on("start", dragAllStart)
+        .on("drag", dragAll)
+        .on("end",dragAllStop));
+    
+    var container = svg.append("g");
+d3.json("debate.json", function(error, graph) {
+  if (error) throw error;
+
+    
+    var pie = d3.pie()
+        .sort(null)
+        .value(function(d) { return Number(d.value); });
+
+    var arc = d3.arc().innerRadius(0);
+
+
+    
+    
+    var link = container.selectAll(".link")
+        .data(graph.links)
+        .enter().append("line")
+        .attr("class", "link")
+        .attr('stroke-width', function(d) {if (Number(d.width)==0) {return 0} else {return 0.3+Number(d.width)};});
+
+    var node = container.selectAll(".node")
+        .data(graph.nodes)
+        .enter().append("g")
+        .attr("class", "node")
+        .on("click", function(d){var client = new XMLHttpRequest();
+                                 var url = "http://127.0.0.1:8765";
+                                 client.open("POST",url,true);
+                                 client.send(d.id);
+                                })
+        .call(d3.drag()
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended));
+    
+    // "Number(d.size*x)" donne la taille des disques affichés à l'écran ; changer le paramètre "x" donne des disques plus ou moins gros.
+    node.each(function(d){
+    arc = arc.outerRadius(function() {return Number(d.size*2.5);});// attention correction erreur code pour outerRadius ici et supprimé lors de la déclaration d'arc
+    
+    var textPos=[]
+    d3.select(this)
+    .selectAll("path")
+        .data(function(d,i) { return pie(d.proportions);})
+    .enter().append("container:path")
+        .attr("d", arc)
+        .style("fill", function(d,i){ return color(d,i) });
+        
+        
+     var arcs =d3.select(this).selectAll(".slice")
+      // Associate the generated pie data (an array of arcs, each having startAngle,
+      // endAngle and value properties) 
+      .data(function(d,i) { return pie(d.proportions);})
+      // This will create <g> elements for every "extra" data element that should be associated
+      // with a selection. The result is creating a <g> for every object in the data array
+      .enter()
+      // Create a group to hold each slice (we will have a <path> and a <text>
+      // element associated with each slice)
+      .append("container:g")
+      .attr("class", "slice");    //allow us to style things in the slices (like text)
+
+
+    // Add a legendLabel to each arc slice...
+    arcs.append("container:text")
+      .attr("transform", function(a,i) { 
+        var countX=1;
+        var countY=1;
+        var currentPos=arc.centroid(a);
+        var superposition=true;
+        var dy=0;
+        var dx=0;
+        while(superposition){
+            superposition=false;
+            var ind;
+            for(ind=0;ind<textPos.length;ind++){
+                if (Math.abs(textPos[ind][1]-currentPos[1]-dy)<d.size/3){
+                    if (dy>0){
+                        dy=-countY*d.size/10;
+                    } else {
+                       countY++
+                       dy=countY*d.size/10;
+                    };
+                    superposition=true;
+                };
+                if (Math.abs(textPos[ind][0]-currentPos[0]-dx)<d.size/5){
+                    if (dx>0){
+                        dx=-countX*d.size/10;
+                    } else {
+                       countX++
+                       dx=countX*d.size/10;
+                    };
+                    superposition=true;
+                };
+            };
+           
+        };
+        
+        textPos.push(arc.centroid(a));
+        return "translate(" + (arc.centroid(a)).SumArray([dx,dy]) + ")";
+      })
+      .attr("text-anchor", "middle") //center the text on it's origin
+        // "Number(d.size*x)" donne la taille de la police d'écriture des notions dans les disques. Changer "x" donne une taille plus ou moins grosse de la police.
+      .style("font", function (a,i) {return "bold "+(1+Number(d.size*1.5)*Math.log(1+(a.endAngle-a.startAngle))/(2*"string".length))+"px Century gothic"})
+      .text(function(d, i) {return d.data.sujet; });
+
+    })
+
+    // Décommenter cette partie du code si l'on souhaite afficher les titres des articles sur les disques.
+/*    var label = node.append("container:text")
+    .text(function (d) { return d.title; })
+    .attr("dy", ".71em")
+    .style("text-anchor", "middle")
+    .style("font-family", "Century gothic")
+    .style("fill","Black");*/
+    
+    svg.call(d3.zoom().on("zoom", function () {
+    container.attr("transform", function(d) { console.log("container");return ("translate(" + d3.event.transform.x+","+d3.event.transform.y+ ")" + " scale(" + d3.event.transform.k + ")");});
+    label.attr("transform",function(d) {console.log("label");return("translate(0,"+Number(d.size)+ ")" +" scale(" + 1/d3.event.transform.k + ")");});
+    
+  }));
+    
+   
+    
+    node.append("title")
+      .text(function(d) {return d.title + "\n authors: " + d.authors + "\n date: " + d.date + "\n citations: " + d.nbCitations ; });
+    
+    simulation
+      .nodes(graph.nodes)
+      .on("tick", ticked);
+
+    simulation.force("link")
+      .links(graph.links);
+
+    function ticked() {
+        link.attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+
+        node.attr("x", function(d) { return d.x; })
+            .attr("y", function(d) { return d.y; })
+            .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"});    
+
+    };
+});
+    
+function dragstarted(d) {
+  if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+  d.fx = d.x;
+  d.fy = d.y;
+}
+
+function dragged(d) {
+  d.fx = d3.event.x;
+  d.fy = d3.event.y;
+}
+
+function dragended(d) {
+  if (!d3.event.active) simulation.alphaTarget(0);
+  d.fx = null;
+  d.fy = null;
+}
+
+function dragAllStart(){
+    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+    clickXIni=d3.event.x;
+    clickYIni=d3.event.y;
+    forceXIni=forceX;
+    forceYIni=forceY;
+}
+function dragAll(){
+    forceX=d3.event.x-clickXIni+forceXIni;
+    forceY=d3.event.y-clickYIni+forceYIni;
+    simulation.force("center",d3.forceCenter(forceX,forceY));
+}
+
+function dragAllStop(){
+    if (!d3.event.active) simulation.alphaTarget(0);
+}
+    
+
+
+    
+    
+</script>
+</body>
+</html>

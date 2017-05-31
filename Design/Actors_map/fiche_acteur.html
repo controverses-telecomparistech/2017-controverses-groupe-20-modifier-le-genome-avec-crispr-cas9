@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<link rel="stylesheet" type="text/css" href="timeline.css">
+<script type="text/javascript" src="../d3/d3.min.js"></script>
+</head>
+<body>
+
+
+
+<script type="text/javascript">
+            d3.text("fiches_acteurs.csv", function(data) {
+                var psv = d3.dsvFormat(";");
+                var parsedCSV = psv.parseRows(data);
+                var container = d3.select("body");
+                n = parsedCSV.length;
+                var actor = 2;
+                for(var i = 1;i<n;i++){
+                    if(parsedCSV[i][actor].length!=0)
+                    var line = container.append("p")
+                                .html("<strong>"+parsedCSV[i][0]+"</strong> : "+parsedCSV[i][actor]);
+                }
+            });
+</script>
+    
+</body>    
+
