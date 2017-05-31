@@ -36,3 +36,7 @@ li .source-title {
 	height: 600px;
 	float: left;
 }
+.left_picture{
+	float:left;
+	margin: 0 16px 16px 0;
+}
