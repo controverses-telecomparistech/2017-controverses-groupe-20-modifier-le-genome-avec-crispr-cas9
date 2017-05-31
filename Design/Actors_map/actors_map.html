@@ -25,7 +25,6 @@ path.arc {
 .node {
   font-size: 40px;
   font-weight: bold;
-  pointer-events: none;
   font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color :  #fff;
   
@@ -83,10 +82,11 @@ d3.json("actors.json", function(json) {
     .enter().append("svg:path")
       .attr("class", "link")
       .attr("d", diagonal);
-
+    
   var node = vis.selectAll("g.node")
       .data(nodes)
     .enter().append("svg:g")
+      .on("click",redirect)
       .attr("class", "node")
       .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + (d.y/30)**2.5 + ")"; })
 
@@ -99,7 +99,7 @@ d3.json("actors.json", function(json) {
       .attr("text-anchor", function(d) {return d.x < 180 ? "start" : "end"; })
       .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })
       .style("fill","white")
-      .html(function(d) {                       
+      .text(function(d) {                       
                          return d.name});
 });
 
@@ -156,11 +156,15 @@ function mouseup() {
 function cross(a, b) {
   return a[0] * b[1] - a[1] * b[0];
 }
+        
+function redirect(d){
+    console.log("clicked");
+    window.location.replace(d.url);
+}
 
 function dot(a, b) {
   return a[0] * b[0] + a[1] * b[1];
 }
-
 
     </script>
   </body>
