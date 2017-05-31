@@ -87,3 +87,11 @@ a:hover {
   font-size: 12px;
   color: #999;
 }
+
+#actors_map{
+  display: table;
+  margin: auto;
+}
+section .container{
+  margin-top: 20px;
+}

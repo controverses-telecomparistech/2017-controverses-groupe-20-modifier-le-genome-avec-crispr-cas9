@@ -10,3 +10,29 @@
 #timeline{
 	padding-top: 20px;
 }
+
+#maincontent ul{
+	list-style: none;
+	text-align: left;
+}
+p{
+	text-align:justify;
+}
+.about{
+	color:#2C3E50;
+	font-weight: bold;
+}
+.source-type{
+	color: #2C3E50;
+	font-size: 20px;
+}
+
+li .source-title {
+	color: white;
+	font-size: 14px;
+}
+.grande_image{
+	width:600px;
+	height: 600px;
+	float: left;
+}

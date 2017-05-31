@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
 
@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Chronologie</title>
+    <title>expertise scientifique</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -22,9 +22,6 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/timeline.css">
-    <link rel="stylesheet" text="text/css" href="timeline.css">
-    <script type="text/javascript" src="Actors_map/d3/d3.min.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -108,134 +105,39 @@
         <!-- /.container-fluid -->
     </nav>
 
+    <!-- Header -->
     <header>
-        <div class="container">
-            <h1 class="text-center">
-                Chronologie
-            </h1>
+        <div class="container" id="maincontent" tabindex="-1">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-text">
+                        <h1 class="name">Expertise Scientifique et Technique</h1>
+                    </div>
+                    <img class="img-responsive" src="img/portfolio/science1.png" alt="">
+                </div>
+            </div>
         </div>
     </header>
 
+     <section>
 
-    <!-- Timeline -->
-
-    <div class="container">
-    <div class="row">
-        <div class="timeline-centered" id="timeline">
-
-
-    
-    
+        <div class="container">
+        <h3>Titre ou phrase d'introduction</h3>
+        <br>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque incidunt facere nesciunt, pariatur, eveniet modi ullam, necessitatibus natus, dolorum praesentium vero! Nobis magnam id, exercitationem officia, alias velit maxime nihil.lorem lrem    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique eaque quae omnis sit illo magni debitis, officiis minima mollitia laudantium porro delectus odio qui placeat quis sint hic quaerat quibusdam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. A est error nostrum. Repellendus doloribus, ut, voluptas magni laudantium repellat autem soluta veritatis facilis voluptate minima iste consequatur. Possimus, officiis, ea!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi nemo veritatis quo eveniet consequatur dolores corrupti dicta fuga nisi quod labore, minima esse, in praesentium quisquam. Accusamus placeat magni nulla.  </p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque incidunt facere nesciunt, pariatur, eveniet modi ullam, necessitatibus natus, dolorum praesentium vero! Nobis magnam id, exercitationem officia, alias velit maxime nihil.lorem lrem    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique eaque quae omnis sit illo magni debitis, officiis minima mollitia laudantium porro delectus odio qui placeat quis sint hic quaerat quibusdam.Lorem ipsum dolor sit amet, consectetur adipisicing elit. A est error nostrum. Repellendus doloribus, ut, voluptas magni laudantium repellat autem soluta veritatis facilis voluptate minima iste consequatur. Possimus, officiis, ea!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi nemo veritatis quo eveniet consequatur dolores corrupti dicta fuga nisi quod labore, minima esse, in praesentium quisquam. Accusamus placeat magni nulla.</p>
+        <br>
+        <a href="#" target="_blank">Compte rendu complet</a>
         </div>
-    </div>
-    </div>
-</body>
-<script type="text/javascript">
-            d3.text("timeline.csv", function(data) {
-                var psv = d3.dsvFormat(";");
-                var parsedCSV = psv.parseRows(data);
-                var timeline = d3.select("#timeline");
-                n = parsedCSV[1].length;
-                var opinion;
-                for(var i =1;i<n;i++){
-                  for(var j =2;j<6;j++){
-                      if(parsedCSV[j][i].length!=0){
-                          opinion = j-2;
-                      }
-                  }
-                  var article = timeline.append("article")
-                                .attr("class",function(){if(opinion<2){ return "timeline-entry";}else {
-                                    return "timeline-entry left-aligned";
-                                };});
-                  var content = article.append("div")
-                                    .attr("class","timeline-entry-inner");
-                  var time = content.append("time")
-                            .attr("class","timeline-time")
-                            .append("span")
-                            .text(parsedCSV[1][i]);
-                  var icon = content.append("div")
-                            .attr("class","timeline-icon")
-                            .style("background-color",function(){
-                                switch(opinion){
-                                    case 0:
-                                        return "#00a651";
-                                        break;
-                                    case 1:
-                                        return "#bcf442";
-                                        break;
-                                    case 2:
-                                        return "#f4a142";
-                                        break;
-                                    case 3:
-                                        return "#cc2424";
-                                        break;
-                                    default:
-                                        console.log("case error");
-                                        
-                            }
-                            })
-                            .append("i")
-                            .attr("class","entypo-feather");
-                var label = content.append("div")
-                            .attr("class","timeline-label");
-                var title = label.append("h2")
-                            .text(parsedCSV[6][i]);
-                var description = label.append("p")
-                                    .text(parsedCSV[9][i]);
-                };  
-                   
-            });
-</script>
-    <!-- End of Timeline -->
-    
+    </section>
 
     <!-- Footer -->
     <footer class="text-center">
-        <div class="footer-above">
-            <div class="container">
-                <div class="row">
-                    <div class="footer-col col-md-4">
-                        <h3>Location</h3>
-                        <p>3481 Melrose Place
-                            <br>Beverly Hills, CA 90210</p>
-                    </div>
-                    <div class="footer-col col-md-4">
-                        <h3>Around the Web</h3>
-                        <ul class="list-inline">
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Facebook</span><i class="fa fa-fw fa-facebook"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Google Plus</span><i class="fa fa-fw fa-google-plus"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Twitter</span><i class="fa fa-fw fa-twitter"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Linked In</span><i class="fa fa-fw fa-linkedin"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><span class="sr-only">Dribble</span><i class="fa fa-fw fa-dribbble"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="footer-col col-md-4">
-                        <h3>About Freelancer</h3>
-                        <p>Freelance is a free to use, open source Bootstrap theme created by <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="footer-below">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        Copyright &copy; Your Website 2016
-                    </div>
-                </div>
-            </div>
+                Site developpé dans le cadre du projet ETIC de Télécom Paristech
         </div>
     </footer>
+    
 
     <!-- jQuery -->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -254,6 +156,5 @@
     <script src="js/freelancer.min.js"></script>
 
 </body>
-
 
 </html>
