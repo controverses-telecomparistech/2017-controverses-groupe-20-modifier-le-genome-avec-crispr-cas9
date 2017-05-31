@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<html>
+  <head>
+       <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <style>
-
+strong { 
+    font-weight: bold;
+}
 .link {
   stroke-opacity: 1;
 }
@@ -11,6 +16,8 @@
 }
 
 </style>
+</head>
+<body>
 <svg width="960" height="600"></svg>
 <script src="d3/d3.min.js"></script>
 <script>
@@ -44,6 +51,7 @@ d3.json("debate.json", function(error, graph) {
       .data(graph.nodes)
     .enter().append("g") 
       .attr("class", "node")
+      .attr("id",function(d){return "nde_"+d.id})
       .on("click",displayText)
       .call(d3.drag()
           .on("start", dragstarted)
@@ -51,7 +59,7 @@ d3.json("debate.json", function(error, graph) {
           .on("end", dragended));
     
     var rectangle = node.append("rect")
-                    .attr("width", function(d){console.log(d.name.length*10);return d.name.length*10;})
+                    .attr("width", function(d){return d.name.length*10;})
                     .attr("height", rectH)
                     .attr("id",function(d){return "rect_"+d.id;})
                     .attr("rx",6)
@@ -59,15 +67,23 @@ d3.json("debate.json", function(error, graph) {
                     .style("fill", function(d) { return color(d.group); });
     
     
-    var label = node.append("svg:text")
-    .text(function (d) { return d.name; })
+    var label = node.append("text")
     .attr("transform", function(d){return "translate(" +(d.name.length*10./2) + "," +rectH/2 + ")"})
     .style("text-anchor", "middle")
     .style("size",2)
-    .style("fill","Black");
+    .style("fill","Black")
+    .style('font-weight','bold')
+    .html(function (d) { return d.name});
+    
+    var description = node.append("text")
+    .attr("id",function(d){return "desc_"+d.id})
+    .style("text-anchor", "middle")
+    .style("size",2)
+    .style("fill","Black")
+    .html(function (d) { return ""});
 
   node.append("title")
-      .text(function(d) { return d.id; });
+      .text(function(d) { return d.name; });
 
   simulation
       .nodes(graph.nodes)
@@ -109,6 +125,7 @@ function dragended(d) {
 function displayText(d){
     console.log("display");
     var rect = d3.select("#rect_"+d.id);
+    var desc = d3.select("#desc_"+d.id);
     var bbox= rect.node().getBBox();
     n = d.text.length;
     if(d.text.length!=0){
@@ -116,12 +133,34 @@ function displayText(d){
             rect.transition().attr("height",rectH)
                             .attr("width",d.name.length*10)
                             .attr("transform","translate(" + 0+ "," + 0 + ")");
+            desc.html("");
         }
         else{
-            rect.transition().attr("height",3*rectH)
-                            .attr("width",MaxRectW)
-                            .attr("transform","translate(" + -(MaxRectW-d.name.length*10)/2 + "," + 0 + ")");
+            var k =Math.round(n*10/MaxRectW);
+            rect.attr("height",(k*0.7+1)*rectH)
+                            .attr("width",MaxRectW*0.9)
+                            .attr("transform","translate(" + -(MaxRectW*0.9-d.name.length*10)/2 + "," + 0 + ")");
+            desc.html(function (d) { 
+                var split = d.text.split(" ");
+                console.log(split);
+                var l = Math.round(split.length/k);
+                var texte = "";
+                var decalageY = rectH*3/2;
+                for(var i =0;i<k;i++){
+                    console.log((split.slice(i*l,(i+1)*l)).join(" "));
+                    var ligne = (split.slice(i*l,(i+1)*l)).join(" ");
+                    X = (MaxRectW-ligne.length*10);
+                    texte = texte + '<tspan x="'+(d.name.length*10./2)+'"  dy="'+decalageY+'">' + ligne + '</tspan>';
+                    var decalageY = rectH/2;
+                };
+                var ligne = (split.slice(k*l).join(" "));
+                X = (MaxRectW-ligne.length*10);
+                texte = texte + '<tspan x="'+(d.name.length*10./2)+'"  dy="'+rectH/2+'">' + ligne + '</tspan>';
+                
+                return texte });
     }
     }
 }
 </script>
+  </body>
+</html>
