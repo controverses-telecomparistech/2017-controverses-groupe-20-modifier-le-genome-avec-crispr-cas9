@@ -3,13 +3,11 @@
 <style>
 
 .link {
-  stroke: #999;
   stroke-opacity: 1;
 }
 
 .nodes rectangle {
   stroke: #fff;
-  stroke-width: 0.5px;
 }
 
 </style>
@@ -18,16 +16,16 @@
 <script>
 
 var rectH=30;
-var rectW=100;
+var MaxRectW=600;
     
 var svg = d3.select("svg"),
-    width = +svg.attr("width"),S
+    width = +svg.attr("width"),
     height = +svg.attr("height");
 
 var color = d3.scaleOrdinal(d3.schemeCategory20);
 
 var simulation = d3.forceSimulation()
-    .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(200).strength(10))
+    .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(function(d){return 100*Math.abs(d.size)}).strength(0.7))
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, height / 2));
 
@@ -38,7 +36,8 @@ d3.json("debate.json", function(error, graph) {
         .data(graph.links)
         .enter().append("line")
         .attr("class", "link")
-        .attr('stroke-width', function(d) { return 0.5;});
+        .attr('stroke-width', function(d) { return 0.5;})
+        .attr("stroke",function(d) {if(d.size>0){return "#999";}else{return "#fff";}});
   
 
   var node = svg.selectAll(".node")
@@ -51,19 +50,20 @@ d3.json("debate.json", function(error, graph) {
           .on("drag", dragged)
           .on("end", dragended));
     
-    var rectangleLabel = node.append("rect")
-                    .attr("width", rectW)
+    var rectangle = node.append("rect")
+                    .attr("width", function(d){console.log(d.name.length*10);return d.name.length*10;})
                     .attr("height", rectH)
+                    .attr("id",function(d){return "rect_"+d.id;})
                     .attr("rx",6)
                     .attr('ry',6)
                     .style("fill", function(d) { return color(d.group); });
     
+    
     var label = node.append("svg:text")
     .text(function (d) { return d.name; })
-    .attr("transform", "translate(" +rectW/2 + "," +rectH/2 + ")")
+    .attr("transform", function(d){return "translate(" +(d.name.length*10./2) + "," +rectH/2 + ")"})
     .style("text-anchor", "middle")
-    .style("font-family", "Century gothic")
-    .style("size",10)
+    .style("size",2)
     .style("fill","Black");
 
   node.append("title")
@@ -85,7 +85,7 @@ d3.json("debate.json", function(error, graph) {
 
     node.attr("x", function(d) { return d.x; })
     .attr("y", function(d) { return d.y; })
-    .attr("transform", function(d) { return "translate(" + (d.x-rectW/2) + "," + (d.y-rectH/2) + ")"});  
+    .attr("transform", function(d) { return "translate(" + (d.x-d.name.length*10/2) + "," + (d.y-rectH/2) + ")"});  
   }
 });
 
@@ -108,6 +108,20 @@ function dragended(d) {
     
 function displayText(d){
     console.log("display");
-    console.log(d);
+    var rect = d3.select("#rect_"+d.id);
+    var bbox= rect.node().getBBox();
+    n = d.text.length;
+    if(d.text.length!=0){
+        if(bbox.height!=rectH){
+            rect.transition().attr("height",rectH)
+                            .attr("width",d.name.length*10)
+                            .attr("transform","translate(" + 0+ "," + 0 + ")");
+        }
+        else{
+            rect.transition().attr("height",3*rectH)
+                            .attr("width",MaxRectW)
+                            .attr("transform","translate(" + -(MaxRectW-d.name.length*10)/2 + "," + 0 + ")");
+    }
+    }
 }
 </script>

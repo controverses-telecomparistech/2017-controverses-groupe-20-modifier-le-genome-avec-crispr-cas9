@@ -1,24 +1,40 @@
 {"nodes":[
-	{"id": "0", "name": "CrispR-cas9: la modification du génome"},
+	{"id": "0", "name": "CrispR-cas9: la modification du génome","text":""},
   	{"id": "1", "name": "Législation","text": ""},
-    {"id": "1.1", "name": "Sécurité", "text": "Le CRISPER - CAS 9 soulève de profondes questions quant aux risques bio-terroristes qu’il pourrait constituer. Les avis sont partagés entre différentes instances du pouvoir, à toutes les échelles. L’ONU, la CIA, le Ministère de la Défense, l’Assemblée Nationale…"},
-  	{"id": "1.2", "name": "Recherche", "text": "Le CRISPR - CAS 9 soulève également un dilemme pour la recherche: jusqu’où pouvons-nous aller sachant que nous ne sommes pas certains des conséquences que cela pourrait avoir en matière de santé publique ? Que permettre ? Qui peut - faire ce choix ? Faut-il consulter l’avis des populations, ou suivre l’avis de la communauté scientifique, elle-même divisée sur la question?"},
+    {"id": "1_1", "name": "Sécurité", "text": "Le CRISPER - CAS 9 soulève de profondes questions quant aux risques bio-terroristes qu’il pourrait constituer. Les avis sont partagés entre différentes instances du pouvoir, à toutes les échelles. L’ONU, la CIA, le Ministère de la Défense, l’Assemblée Nationale…"},
+  	{"id": "1_2", "name": "Recherche", "text": "Le CRISPR - CAS 9 soulève également un dilemme pour la recherche: jusqu’où pouvons-nous aller sachant que nous ne sommes pas certains des conséquences que cela pourrait avoir en matière de santé publique ? Que permettre ? Qui peut - faire ce choix ? Faut-il consulter l’avis des populations, ou suivre l’avis de la communauté scientifique, elle-même divisée sur la question?"},
    	{"id": "2", "name": "Développement", "text": ""},
-    {"id": "2.1", "name": "test", "text": "Le CRISPR - CAS 9 pourrait soigner des maladies génétiques, des virus grave comme le SIDA, ou même guérir le cancer, mais il faut pouvoir le tester. Sur des êtres humains adultes et des embryons. Mais il est immoral d’effectuer des recherches sur des embryons, car cela risquerait de les modifier irréversiblement et mener à de l’eugénisme. De même, faut-il l’expérimenter sur des cellules germinales et somatiques - pratique standard - alors que cela pourrait altérer le génome humain en proliférant librement dans la piscine génétique mondiale ?" },
+    {"id": "2_1", "name": "test", "text": "Le CRISPR - CAS 9 pourrait soigner des maladies génétiques, des virus grave comme le SIDA, ou même guérir le cancer, mais il faut pouvoir le tester. Sur des êtres humains adultes et des embryons. Mais il est immoral d’effectuer des recherches sur des embryons, car cela risquerait de les modifier irréversiblement et mener à de l’eugénisme. De même, faut-il l’expérimenter sur des cellules germinales et somatiques - pratique standard - alors que cela pourrait altérer le génome humain en proliférant librement dans la piscine génétique mondiale ?" },
  	{"id": "3", "name": "Utilisation", "text": ""},
-    {"id": "3.1", "name": "Aspect thérapeutique", "text": "CRISPR-CAS9 à en effet un aspect thérapeutique certains. Il pourrait être utilisé pour guérir certaines maladies actuellement incurables comme le VIH. De plus il pourrait être utilisé pour réduire les risque d’accident cardio vasculaire et de cancer au niveau génétique. Et c’est là que se trouve le débat. Où place-t-on la limite entre modification pour le bien d’un être humain et eugénisme ? A ça vient s’ajouter le débat sur la préservation du génome humain. Il s’agit d’un élément du patrimoine de l’UNESCO , issues de millers d’années d’évolution : Est-on réellement en droit de le modifier a notre guise ?"},
-   	{"id": "3.2", "name": "Modification génomique des plantes", "text": "On ne présente plus aujourd’hui le débat des OGMs, mais le CRISPR-CAS9 lui a donné un nouvel aspect. En effet la modification génétique qui peut être réalisé avec technologie serait moins couteuse et plus efficace que ce que nous avons fait jusqu’a présent. On trouverait donc sur le marché de plus en plus de produits génétiquement modifiés. De plus, Les produits modifiés par CRISPR-CAS9 ne seraient pas étiqueté comme OGMs, car aucun gène n'est ajouté avec cette technologie. C’est là que le bât blesse : comment  distinguer les OGMS sur le marché ?En plus du débat sur la modification génétique des plantes et leurs bienfait s’associe donc le débat de la commercialisation et de la prévention du grand public.  "},
-    {"id": "3.3", "name": "Modification génomique des êtres humains", "text": "Bien que les aspects thérapeutiques puissent rencontrer une certaines opposition, ce débat là est particulièrement houleux. Le problème se situe notamment dans le contrôle de l’application thérapeutique qui pourrait dériver et en venir à la modification génomique pour un aspect esthétique. Le CRSIPR - CAS 9, eugénisme ou transhumanisme ?"}
+    {"id": "3_1", "name": "Aspect thérapeutique", "text": "CRISPR-CAS9 à en effet un aspect thérapeutique certains. Il pourrait être utilisé pour guérir certaines maladies actuellement incurables comme le VIH. De plus il pourrait être utilisé pour réduire les risque d’accident cardio vasculaire et de cancer au niveau génétique. Et c’est là que se trouve le débat. Où place-t-on la limite entre modification pour le bien d’un être humain et eugénisme ? A ça vient s’ajouter le débat sur la préservation du génome humain. Il s’agit d’un élément du patrimoine de l’UNESCO , issues de millers d’années d’évolution : Est-on réellement en droit de le modifier a notre guise ?"},
+   	{"id": "3_2", "name": "Modification génomique des plantes", "text": "On ne présente plus aujourd’hui le débat des OGMs, mais le CRISPR-CAS9 lui a donné un nouvel aspect. En effet la modification génétique qui peut être réalisé avec technologie serait moins couteuse et plus efficace que ce que nous avons fait jusqu’a présent. On trouverait donc sur le marché de plus en plus de produits génétiquement modifiés. De plus, Les produits modifiés par CRISPR-CAS9 ne seraient pas étiqueté comme OGMs, car aucun gène n'est ajouté avec cette technologie. C’est là que le bât blesse : comment  distinguer les OGMS sur le marché ?En plus du débat sur la modification génétique des plantes et leurs bienfait s’associe donc le débat de la commercialisation et de la prévention du grand public.  "},
+    {"id": "3_3", "name": "Modification génomique des êtres humains", "text": "Bien que les aspects thérapeutiques puissent rencontrer une certaines opposition, ce débat là est particulièrement houleux. Le problème se situe notamment dans le contrôle de l’application thérapeutique qui pourrait dériver et en venir à la modification génomique pour un aspect esthétique. Le CRSIPR - CAS 9, eugénisme ou transhumanisme ?"}
    	],
 "links": [
-	{"source": "0", "target": "1"},
-	{"source": "0", "target": "2"},
-	{"source": "0", "target": "3"},
-	{"source": "1", "target": "1.1"},
-	{"source": "1", "target": "1.2"},
-	{"source": "2", "target": "2.1"},
-	{"source": "3", "target": "3.1"},
-	{"source": "3", "target": "3.2"},
-	{"source": "3", "target": "3.3"}
+	{"source": "0", "target": "1","size":1},
+	{"source": "0", "target": "2","size":1},
+	{"source": "0", "target": "3","size":1},
+    
+    {"source": "0", "target": "3_1","size":-3},
+	{"source": "0", "target": "3_2","size":-3},
+	{"source": "0", "target": "3_3","size":-3},
+    {"source": "0", "target": "1_1","size":-3},
+	{"source": "0", "target": "1_2","size":-3},
+	{"source": "0", "target": "2_1","size":-3},
+    
+	{"source": "1", "target": "1_1","size":1},
+	{"source": "1", "target": "1_2","size":1},
+	{"source": "2", "target": "2_1","size":1},
+	{"source": "3", "target": "3_1","size":1},
+	{"source": "3", "target": "3_2","size":1},
+	{"source": "3", "target": "3_3","size":1},
+    {"source": "1", "target": "2","size":-2},
+    {"source": "1", "target": "3","size":-2},
+    {"source": "2", "target": "3","size":-2},
+    
+    {"source": "1_1", "target": "1_2","size":-1},
+    {"source": "3_1", "target": "3_2","size":-1},
+    {"source": "3_1", "target": "3_3","size":-1},
+    {"source": "3_2", "target": "3_3","size":-1}
 	]
 }
