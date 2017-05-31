@@ -24,8 +24,8 @@
     {"source": "2", "target": "3","size":-2},
     
     {"source": "1_1", "target": "1_2","size":-2},
-    {"source": "3_1", "target": "3_2","size":-2},
-    {"source": "3_2", "target": "3_3","size":-2},
+    {"source": "3_1", "target": "3_2","size":-1.5},
+    {"source": "3_2", "target": "3_3","size":-1.5},
     {"source": "3_1", "target": "3_3","size":-2},
     
     {"source": "0", "target": "1","size":1},
