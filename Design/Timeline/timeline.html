@@ -16,7 +16,7 @@
 </body>
 
 <script type="text/javascript">
-            d3.text("timeline.csv", function(data) {
+            d3.text("timelinefinal.csv", function(data) {
                 var psv = d3.dsvFormat(";");
                 var parsedCSV = psv.parseRows(data);
                 var timeline = d3.select("#timeline");
