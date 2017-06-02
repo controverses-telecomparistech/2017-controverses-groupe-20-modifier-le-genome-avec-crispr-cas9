@@ -34,7 +34,6 @@
 
 path.arc {
   cursor: move;
-  fill: #18BC9C;
   color : #fff;
 }
 
@@ -153,7 +152,7 @@ path.arc {
 
     <!--Map -->
     
-    <section  class="success" style="text-align: center;">
+    <section style="text-align: center;">
     <div class="container">
     <div id="actors_map" style="vertical-align : middle;">
     <script type="text/javascript" src="Actors_map/d3/d3.js"></script>
@@ -179,9 +178,9 @@ var diagonal = d3.svg.diagonal.radial()
     .projection(function(d) {if(d.children){return [ d.y*0.7, d.x / 180 * Math.PI]; } else {return [ d.y, d.x / 180 * Math.PI]; }});
 
 var svg = d3.select("#actors_map").append("div")
-    .style("width", "70%")
-    .style("height","70%")
-    .style("background-color", "#18BC9C")
+    .style("width", "100%")
+    .style("height",960)
+    .style("background-color", "#fff")
     .style("display","block");
         
         
@@ -190,11 +189,18 @@ var vis = svg.append("svg:svg")
     .attr("width", w)
     .attr("height", w)
   .append("svg:g")
-    .attr("transform", "translate(" + rx + "," + ry + ")");
+    .attr("transform", "translate(" + rx + "," + (ry+70) + ")");
 
 vis.append("svg:path")
     .attr("class", "arc")
-    .attr("d", d3.svg.arc().innerRadius(ry - 120).outerRadius(ry).startAngle(0).endAngle(2 * Math.PI))
+    .style("fill","#2C3E50")
+    .attr("d", d3.svg.arc().innerRadius(ry +30).outerRadius(ry+70).startAngle(0).endAngle(2 * Math.PI))
+    .on("mousedown", mousedown);
+        
+vis.append("svg:path")
+    .attr("class", "arc")
+    .style("fill","#e04f5f")
+    .attr("d", d3.svg.arc().innerRadius(0).outerRadius(ry+20).startAngle(0).endAngle(2 * Math.PI))
     .on("mousedown", mousedown);
 
 d3.json("Actors_map/actors.json", function(json) {
@@ -220,7 +226,10 @@ d3.json("Actors_map/actors.json", function(json) {
       .attr("dy", ".31em")
       .attr("text-anchor", function(d) {return d.x < 180 ? "start" : "end"; })
       .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })
-      .style("fill","white")
+      .style("fill",function(d) {if(d.children){ if(d.name=="CrispR-cas9")
+                                {return "#1ceac1"}else{return "white"}}
+                                 else{
+                                    return  "#ffffa0"}})
       .html(function(d) {return "<input type='button' onclick="+"location.href='index.html';" +  "value = cool/>" + d.name});
 });
 
@@ -266,7 +275,7 @@ function mouseup() {
         .style("-webkit-transform", tx);
 
     vis
-        .attr("transform", "translate(" + rx + "," + ry + ")rotate(" + rotate + ")")
+        .attr("transform", "translate(" + rx + "," + (ry+70) + ")rotate(" + rotate + ")")
       .selectAll("g.node text")
         .attr("dx", function(d) { return (d.x + rotate) % 360 < 180 ? 8 : -8; })
         .attr("text-anchor", function(d) { return (d.x + rotate) % 360 < 180 ? "start" : "end"; })
