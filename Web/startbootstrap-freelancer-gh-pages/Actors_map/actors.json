@@ -2,40 +2,29 @@
  "name": "CrispR-cas9",
  "children": [
   {
-   "name": "Droit",
-   "children": [
-    {"name": "ONU", "size":"2000"},
-    {"name": "Tribunal", "size":"2000"}
-   ]
-  },
-  {
    "name":"UNESCO"
   },
   {
    "name": "Ethique",
    "children": [
-    {"name": "Comité d'ethique", "size": 17010}
+    {"name": "Comité d'éthique", "size": 17010}
    ]
   },
   {
    "name": "Gouvernement",
    "children": [
-    {
-     "name": "Arméee",
-     "children": [
-     ]
-    },
-    {"name": "ONU", "size": 1759},
-    {"name": "Conseil de l'Europe", "size": 2165},
-    {"name": "HCB", "size": 1759}
-   ]
-  },
-  {
-   "name": "Entreprise",
-   "children": [
-    {"name": "Monsanto", "size": 1616},
-    {"name": "The Parker Fundation", "size": 1027},
-    {"name":"Start-up","size":1617}
+    {"name": "OPECST", "size": 1759},
+    {"name": "Conseil de l’Europe", "size": 2165},
+    {"name": "HCB", "size": 1759},
+    {"name": "CNDP", "size": 17010},
+    {"name": "Assemblée Nationale", "size": 17010},
+    {"name": "Sécurité", 
+      "children":[
+        {"name": "CIA", "size": 17010},
+        {"name": "SGDSN", "size": 17010},
+        {"name": "CNCB", "size": 17010}
+      ]
+    }
    ]
   },
   {
@@ -46,26 +35,28 @@
     {"name": "Alliance Vita", "size": 17316}
     ]
     },
-    {"name": "Assoc. religieuse", "size": 500}
+    {"name": "Entreprise", 
+    "children":[
+      {"name": "Monsanto", "size": 17010}
+    ]
+  }
     
    ]
   },
   {
    "name": "Santé",
    "children": [
-    {"name": "OMS", "size": 8258},
+    {"name": "NIH", "size": 8258},
     {"name": "INSERM", "size": 10001},
-    {"name": "GreenPeace", "size": 8217}
+    {"name": "Greenpeace", "size": 8217}
    ]
   },
   {
    "name": "Science",
    "children": [
-    {"name": "J.Doudna", "size": 16540},
-    {"name": "E.Charpentier", "size": 16540},
-    {"name": "INRA", "size": 16540},
-    {"name": "Nature", "size": 16540},
-    {"name": "Science", "size": 16540}
+    {"name": "Charpentier & Doudna", "size": 16000},
+    {"name": "Communauté", "size": 1540},
+    {"name": "Académie", "size": 16540}
    ]
   }
  ]

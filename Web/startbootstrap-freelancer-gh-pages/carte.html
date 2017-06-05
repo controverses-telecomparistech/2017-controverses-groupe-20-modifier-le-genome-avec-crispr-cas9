@@ -296,11 +296,11 @@ function mousemove() {
 function updateModalContent(d){
     console.log("update");
     console.log(d);
-    d3.text("Actors_map/fiches_acteurs.csv", function(data) {
+    d3.text("Actors_map/carte_acteurs1.txt", function(data) {
                 var psv = d3.dsvFormat(";");
                 var parsedCSV = psv.parseRows(data);
                 var actor = -1;
-                for(var j =1;j<actors_number;j++){
+                for(var j =1;j<actors_number+1;j++){
                     if(parsedCSV[1][j]==d.name){
                         actor = j;
                     }
