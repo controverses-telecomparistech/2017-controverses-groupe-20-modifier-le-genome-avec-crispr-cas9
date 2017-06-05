@@ -16,6 +16,9 @@
 
     <!-- Theme CSS -->
     <link href="css/freelancer.min.css" rel="stylesheet">
+    <script type="text/javascript" src="d3/d3.min.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- Custom Fonts -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -47,7 +50,6 @@ path.arc {
 .node {
   font-size: 12px;
   font-weight: bold;
-  pointer-events: none;
   font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color :  #fff;
   
@@ -58,6 +60,7 @@ path.arc {
   stroke: #2C3E50;
   stroke-width: 10px;
 }
+
   
 
     </style>
@@ -148,7 +151,11 @@ path.arc {
                 </div>
             </div>
         </div>
+
+
     </header>
+    
+    
 
     <!--Map -->
     
@@ -224,13 +231,17 @@ d3.json("Actors_map/actors.json", function(json) {
   node.append("svg:text")
       .attr("dx", function(d) { return d.x < 180 ? 8 : -8; })
       .attr("dy", ".31em")
+      .style("cursor","pointer") 
       .attr("text-anchor", function(d) {return d.x < 180 ? "start" : "end"; })
       .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })
+      .attr("data-toggle","modal")
+      .attr("data-target","#GSCCModal")
+      .on("click",updateModalContent)
       .style("fill",function(d) {if(d.children){ if(d.name=="CrispR-cas9")
                                 {return "#1ceac1"}else{return "white"}}
                                  else{
                                     return  "#ffffa0"}})
-      .html(function(d) {return "<input type='button' onclick="+"location.href='index.html';" +  "value = cool/>" + d.name});
+      .html(function(d) {return d.name});
 });
 
 d3.select(window)
@@ -256,6 +267,23 @@ function mousemove() {
         .style("-ms-transform", tx)
         .style("-webkit-transform", tx);
   }
+}
+        
+function updateModalContent(d){
+    console.log("update");
+    console.log(d);            
+    d3.text("Actors_map/fiches_acteurs.csv", function(data) {
+                var psv = d3.dsvFormat(";");
+                var parsedCSV = psv.parseRows(data);
+                var container = d3.select("#modal-body");
+                var n = parsedCSV.length;
+                var actor = 2;
+                for(var i = 1;i<n;i++){
+                    if(parsedCSV[i][actor].length!=0)
+                    var line = container.append("p")
+                                .html("<strong>"+parsedCSV[i][0]+"</strong> : "+parsedCSV[i][actor]);
+                }
+            });
 }
 
 function mouseup() {
@@ -298,7 +326,28 @@ function dot(a, b) {
     </section>
 
     <!-- end of map-->   
-
+    
+    
+    <!-- Modal -->
+    <div id="GSCCModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        </div>
+        <div class="modal-body" id="modal-body">
+        ...
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+        </div>  
+    </div>
+    
+    <!-- end of Modal-->
 
     <!-- Footer -->
     <footer class="text-center">
