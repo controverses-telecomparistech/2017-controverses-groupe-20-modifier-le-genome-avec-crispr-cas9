@@ -39,9 +39,17 @@ li .source-title {
 	width:1000px;
 }
 li a{
-	color:white;
+	color:#2C3E50;
 }
-li a:hover{
-	text-decoration: underline;
-	color:white;
+
+header .container{
+	padding-top: 100px;
+	padding-bottom: 10px;
+}
+header .index{
+	padding-top: 120px;
+	padding-bottom: 50px;
+}
+#about{
+	padding-top: 100px;
 }
