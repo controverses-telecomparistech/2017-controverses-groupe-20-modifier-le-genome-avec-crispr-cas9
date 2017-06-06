@@ -31,8 +31,17 @@ li .source-title {
 	color: white;
 	font-size: 14px;
 }
-.grande_image{
-	width:600px;
-	height: 600px;
-	float: left;
+.left_picture{
+	float:left;
+	margin: 0 16px 16px 0;
+}
+#index{
+	width:1000px;
+}
+li a{
+	color:white;
+}
+li a:hover{
+	text-decoration: underline;
+	color:white;
 }

@@ -1,22 +1,37 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<html>
+  <head>
+       <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <style>
-
-.links line {
-  stroke: #999;
-  stroke-opacity: 0.6;
+strong { 
+    font-weight: bold;
+}
+.link {
+  stroke-opacity: 1;
+  stroke-width: 4px;
 }
 
 .nodes rectangle {
   stroke: #fff;
-  stroke-width: 1.5px;
+  stroke-width: 0.5px;
+}
+    
+.node {
+        font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 </style>
-<svg width="960" height="600"></svg>
+</head>
+<body>
+<svg width="960" height="960" style="background-color:#18BC9C "></svg>
 <script src="d3/d3.min.js"></script>
 <script>
 
+var rectH=30;
+var MaxRectW=600;
+    
+    
 var svg = d3.select("svg"),
     width = +svg.attr("width"),
     height = +svg.attr("height");
@@ -24,34 +39,62 @@ var svg = d3.select("svg"),
 var color = d3.scaleOrdinal(d3.schemeCategory20);
 
 var simulation = d3.forceSimulation()
-    .force("link", d3.forceLink().id(function(d) { return d.id; }))
+    .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(function(d){return 150*Math.abs(d.size)}).strength(1))
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, height / 2));
 
 d3.json("debate.json", function(error, graph) {
   if (error) throw error;
 
-  var link = svg.append("g")
-      .attr("class", "links")
-    .selectAll("line")
-    .data(graph.links)
-    .enter().append("line")
-      .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
+  var link = svg.selectAll(".link")
+        .data(graph.links)
+        .enter().append("line")
+        .attr("class", "link")
+        .attr('stroke-width', function(d) { return 0.5;})
+        .attr("stroke",function(d) {if(d.size>0){return "#2C3E50";}else{return "#18BC9C";}});
+  
 
   var node = svg.selectAll(".node")
       .data(graph.nodes)
-    .enter().append("rect")
+    .enter().append("g") 
       .attr("class", "node")
-      .attr("width", 40)
-      .attr("height", 20)
-      .style("fill", function(d) { return color(d.group); })
+      .attr("id",function(d){return "nde_"+d.id})
+      .on("click",displayText)
+      .on("mouseover",function(d){d3.select(this).moveToFront();
+                                  if(d.id.length>1){
+                                        d3.select(this).style("cursor", "pointer"); 
+                                }else{d3.select(this).style("cursor", "default");}})
       .call(d3.drag()
           .on("start", dragstarted)
           .on("drag", dragged)
           .on("end", dragended));
+    
+    var rectangle = node.append("rect")
+                    .attr("width", function(d){return d.name.length*10;})
+                    .attr("height", rectH)
+                    .attr("id",function(d){return "rect_"+d.id;})
+                    .attr("rx",10)
+                    .attr('ry',10)
+                    .style("fill", function(d){if(d.id.length>1){return "#e04f5f"} else{return "#2C3E50"}});
+    
+    
+    var label = node.append("text")
+    .attr("transform", function(d){return "translate(" +(d.name.length*10./2) + "," +rectH/2 + ")"})
+    .style("text-anchor", "middle")
+    .style("size",2)
+    .style("fill",function(d){if(d.id.length>1){return "#ffffa0"} else{return "#fff"}})
+    .style('font-weight','bold')
+    .html(function (d) { return d.name});
+    
+    var description = node.append("text")
+    .attr("id",function(d){return "desc_"+d.id})
+    .style("text-anchor", "middle")
+    .style("size",2)
+    .style("fill",function(d){if(d.id.length>1){return "#ffffa0"} else{return "#fff"}})
+    .html(function (d) { return ""});
 
   node.append("title")
-      .text(function(d) { return d.id; });
+      .text(function(d) { return d.name; });
 
   simulation
       .nodes(graph.nodes)
@@ -68,7 +111,8 @@ d3.json("debate.json", function(error, graph) {
         .attr("y2", function(d) { return d.target.y; });
 
     node.attr("x", function(d) { return d.x; })
-    .attr("y", function(d) { return d.y; });
+    .attr("y", function(d) { return d.y; })
+    .attr("transform", function(d) { return "translate(" + (d.x-d.name.length*10/2) + "," + (d.y-rectH/2) + ")"});  
   }
 });
 
@@ -88,5 +132,54 @@ function dragended(d) {
   d.fx = null;
   d.fy = null;
 }
-
+    
+d3.selection.prototype.moveToFront = function() {  
+      return this.each(function(){
+        this.parentNode.appendChild(this);
+      });
+    };
+    
+function displayText(d){
+    d3.select(this).moveToFront();
+    console.log("display");
+    var rect = d3.select("#rect_"+d.id);
+    var desc = d3.select("#desc_"+d.id);
+    var bbox= rect.node().getBBox();
+    n = d.text.length;
+    if(d.text.length!=0){
+        if(bbox.height!=rectH){
+            rect.transition().duration(40).attr("height",rectH)
+                            .attr("width",d.name.length*10)
+                            .attr("transform","translate(" + 0+ "," + 0 + ")");
+            desc.html("");
+        }
+        else{
+            var k =Math.round(n*10/MaxRectW);
+            rect.transition().duration(40).attr("height",(k*0.7+1)*rectH)
+                            .attr("width",MaxRectW)
+                            .attr("transform","translate(" + -(MaxRectW-d.name.length*10)/2 + "," + 0 + ")");
+            desc.html(function (d) { 
+                var split = d.text.split(" ");
+                console.log(split);
+                var l = Math.round(split.length/k);
+                var texte = "";
+                var decalageY = rectH*3/2;
+                for(var i =0;i<k;i++){
+                    console.log((split.slice(i*l,(i+1)*l)).join(" "));
+                    var ligne = (split.slice(i*l,(i+1)*l)).join(" ");
+                    X = (MaxRectW-ligne.length*10);
+                    texte = texte + '<tspan x="'+(d.name.length*10./2)+'"  dy="'+decalageY+'">' + ligne + '</tspan>';
+                    var decalageY = rectH/2;
+                };
+                var ligne = (split.slice(k*l).join(" "));
+                X = (MaxRectW-ligne.length*10);
+                texte = texte + '<tspan x="'+(d.name.length*10./2)+'"  dy="'+rectH/2+'">' + ligne + '</tspan>';
+                
+                return texte });
+    }
+    }
+}
+    
 </script>
+  </body>
+</html>

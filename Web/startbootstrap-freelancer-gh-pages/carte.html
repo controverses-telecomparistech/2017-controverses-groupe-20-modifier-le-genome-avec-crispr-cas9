@@ -16,6 +16,8 @@
 
     <!-- Theme CSS -->
     <link href="css/freelancer.min.css" rel="stylesheet">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- Custom Fonts -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -34,7 +36,6 @@
 
 path.arc {
   cursor: move;
-  fill: #18BC9C;
   color : #fff;
 }
 
@@ -48,7 +49,6 @@ path.arc {
 .node {
   font-size: 12px;
   font-weight: bold;
-  pointer-events: none;
   font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color :  #fff;
   
@@ -59,6 +59,7 @@ path.arc {
   stroke: #2C3E50;
   stroke-width: 10px;
 }
+
   
 
     </style>
@@ -149,21 +150,46 @@ path.arc {
                 </div>
             </div>
         </div>
+
+
     </header>
+    
+    <!-- end of Header -->
+    
+    <!-- Modal -->
+    <div id="GSCCModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+        </div>
+        <div class="modal-body" id="modal-body">
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+        </div>  
+    </div>
+    
+    <!-- end of Modal-->
+
 
     <!--Map -->
     
-    <section  class="success" style="text-align: center;">
+    <section style="text-align: center;">
     <div class="container">
     <div id="actors_map" style="vertical-align : middle;">
     <script type="text/javascript" src="Actors_map/d3/d3.js"></script>
     <script type="text/javascript" src="Actors_map/d3/d3.layout.js"></script>
+    <script type="text/javascript" src="../../Design/d3/d3.min.js"></script>
     <script type="text/javascript" src="Actors_map/packages.js"></script>
     <link type="text/css" rel="stylesheet" href="Actors_map/style.css"/>
     
     
     <script type="text/javascript">
-
+        
 var w = screen.width*0.8,
     h = screen.height*0.8,
     rx = w / 2,
@@ -179,9 +205,9 @@ var diagonal = d3.svg.diagonal.radial()
     .projection(function(d) {if(d.children){return [ d.y*0.7, d.x / 180 * Math.PI]; } else {return [ d.y, d.x / 180 * Math.PI]; }});
 
 var svg = d3.select("#actors_map").append("div")
-    .style("width", "70%")
-    .style("height","70%")
-    .style("background-color", "#18BC9C")
+    .style("width", "100%")
+    .style("height",960)
+    .style("background-color", "#fff")
     .style("display","block");
         
         
@@ -190,12 +216,21 @@ var vis = svg.append("svg:svg")
     .attr("width", w)
     .attr("height", w)
   .append("svg:g")
-    .attr("transform", "translate(" + rx + "," + ry + ")");
+    .attr("transform", "translate(" + rx + "," + (ry+70) + ")");
 
 vis.append("svg:path")
     .attr("class", "arc")
-    .attr("d", d3.svg.arc().innerRadius(ry - 120).outerRadius(ry).startAngle(0).endAngle(2 * Math.PI))
+    .style("fill","#2C3E50")
+    .attr("d", d3.svg.arc().innerRadius(ry +30).outerRadius(ry+70).startAngle(0).endAngle(2 * Math.PI))
     .on("mousedown", mousedown);
+        
+vis.append("svg:path")
+    .attr("class", "arc")
+    .style("fill","#e04f5f")
+    .attr("d", d3.svg.arc().innerRadius(0).outerRadius(ry+20).startAngle(0).endAngle(2 * Math.PI))
+    .on("mousedown", mousedown);
+        
+var actors_number = 0;
 
 d3.json("Actors_map/actors.json", function(json) {
   var nodes = cluster.nodes(json);
@@ -218,10 +253,19 @@ d3.json("Actors_map/actors.json", function(json) {
   node.append("svg:text")
       .attr("dx", function(d) { return d.x < 180 ? 8 : -8; })
       .attr("dy", ".31em")
+      .style("cursor","pointer") 
       .attr("text-anchor", function(d) {return d.x < 180 ? "start" : "end"; })
       .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })
-      .style("fill","white")
-      .html(function(d) {return "<input type='button' onclick="+"location.href='index.html';" +  "value = cool/>" + d.name});
+      .style("pointer-events",function(d) {if(d.children){return "none"}
+                                 else{return  "auto"}})
+      .attr("data-toggle","modal")
+      .attr("data-target","#GSCCModal")
+      .on("click",updateModalContent)
+      .style("fill",function(d) {if(d.children){ if(d.name=="CrispR-cas9")
+                                {return "#1ceac1"}else{return "white"}}
+                                 else{actors_number++;
+                                    return  "#ffffa0"}})
+      .html(function(d) {return d.name});
 });
 
 d3.select(window)
@@ -248,6 +292,39 @@ function mousemove() {
         .style("-webkit-transform", tx);
   }
 }
+        
+function updateModalContent(d){
+    console.log("update");
+    console.log(d);
+    d3.text("Actors_map/carte_acteurs1.txt", function(data) {
+                var psv = d3.dsvFormat(";");
+                var parsedCSV = psv.parseRows(data);
+                var actor = -1;
+                for(var j =1;j<actors_number+1;j++){
+                    if(parsedCSV[1][j]==d.name){
+                        actor = j;
+                    }
+                }
+                
+                var container = d3.select("#modal-body");
+                var label = d3.select("#myModalLabel")
+                                .style("color","black")
+                
+                container.selectAll("*").remove();
+                if(actor==-1){
+                    label.html("");
+                    return;
+                } else {label.html(parsedCSV[1][actor])};
+                
+                var n = parsedCSV.length;
+                for(var i = 2;i<n;i++){
+                    if(parsedCSV[i][actor].length!=0)
+                    var line = container.append("p")
+                                .style("color","black")
+                                .html("<strong>"+parsedCSV[i][0]+"</strong> : "+parsedCSV[i][actor]);
+                }
+            });
+}
 
 function mouseup() {
   if (m0) {
@@ -266,7 +343,7 @@ function mouseup() {
         .style("-webkit-transform", tx);
 
     vis
-        .attr("transform", "translate(" + rx + "," + ry + ")rotate(" + rotate + ")")
+        .attr("transform", "translate(" + rx + "," + (ry+70) + ")rotate(" + rotate + ")")
       .selectAll("g.node text")
         .attr("dx", function(d) { return (d.x + rotate) % 360 < 180 ? 8 : -8; })
         .attr("text-anchor", function(d) { return (d.x + rotate) % 360 < 180 ? "start" : "end"; })
@@ -289,8 +366,9 @@ function dot(a, b) {
     </section>
 
     <!-- end of map-->   
-
-
+    
+    
+    
     <!-- Footer -->
     <footer class="text-center">
         <div class="footer-below">
