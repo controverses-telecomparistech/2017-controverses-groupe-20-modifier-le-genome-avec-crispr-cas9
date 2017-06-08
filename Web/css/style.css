@@ -69,3 +69,8 @@ html, body {
 .footer, .push {
     height: 155px; /* .push must be the same height as .footer */
 }
+footer #about{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
