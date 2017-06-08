@@ -124,17 +124,17 @@
             <div class="col-md-4 col-sm-4 col-lg-4" style="padding-top : 10px; padding-bottom: 10px">
                 <div class="caption col-md-3 col-sm-3 col-lg-3" style="background-color : #00C943; text-align : center;">
                 </div>
-                <p class="col-md-9 col-sm-9 col-lg-9" style="padding-top : 15px">Pour le génie génétique</p>
+                <p class="col-md-9 col-sm-9 col-lg-9" style="padding-top : 15px;color:#2C3E50">Pour le génie génétique</p>
             </div>
             <div class="col-md-4 col-sm-4 col-lg-4" style="padding-top : 10px; padding-bottom: 10px; padding-left:10px">
                 <div class="caption col-md-3 col-sm-3 col-lg-3" style="background-color : #FF9B28; text-align : center;">
                 </div>
-                <p class="col-md-9 col-sm-9 col-lg-9" style="padding-top : 15px">Meilleur contrôle</p>
+                <p class="col-md-9 col-sm-9 col-lg-9" style="padding-top : 15px;color:#2C3E50">Meilleur contrôle</p>
             </div>
             <div class="col-md-4 col-sm-4 col-lg-4" style="padding-top : 10px; padding-bottom: 10px">
                 <div class="caption col-md-3 col-sm-3 col-lg-3" style="background-color : #cc2424; text-align : center;">
                 </div>
-                <p class="col-md-9 col-sm-9 col-lg-9" style="padding-top : 15px">Contre le génie génétique</p>
+                <p class="col-md-9 col-sm-9 col-lg-9" style="padding-top : 15px;color:#2C3E50">Contre le génie génétique</p>
             </div>
         </div>
     </div>
@@ -177,6 +177,8 @@
                   var time = content.append("time")
                             .attr("class","timeline-time")
                             .append("span")
+                            .style("font-size","20px")
+                            .style("color","#5a5e66")
                             .text(parsedCSV[1][i]);
                   var icon = content.append("div")
                             .attr("class","timeline-icon")
@@ -204,8 +206,11 @@
                 var label = content.append("div")
                             .attr("class","timeline-label");
                 var title = label.append("h2")
+                            .style("color","#fff")
                             .text(parsedCSV[6][i]);
                 var description = label.append("p")
+                                    .style("color","#3b3d42")
+                                    .style("font-size","17px")
                                     .text(parsedCSV[9][i]);
                 };  
                    
