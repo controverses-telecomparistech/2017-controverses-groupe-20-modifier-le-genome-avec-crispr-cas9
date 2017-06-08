@@ -1,0 +1,7 @@
+Cette visualisation est aussi un arbre. Elle est très proche de celle de l'arbre des débats mais l'aspect purement esthétique est légèrement différent. Les noeuds sont présentés circulairement, il faut donc faire tourner le disque pour pouvoir les lires correctement. La visualisation semble plus "propre" que celle de l'arbre des débats mais on perd un peu la vision globale car tous les sujets ne sont pas lisibles en même temps.
+
+Ici aussi différentes couleurs ont été utilisées. Le bleu clair a été utilisé pour mettre en valeur le noeud central, le jaune permet de discerner les noeuds cliquables.
+
+En cliquant sur un noeud jaune, on voit apparaitre une fenêtre modale qui permet d'avoir plus d'informations sur l'acteur. A la différence de l'arbre des débats, on ne voit plus la visualisation lorsque qu'une fenêtre modale est ouverte et on ne peut pas ouvrir plusieurs fenêtres modales en même temps. Cela évite de rendre la visualisation illisible mais empêche de comparer facilement le contenu des fenêtres.
+
+Les inconvénients sont très similaires à ceux de l'arbre des débats même si le "layout" utilisé ici permet d'afficher un plus grand nombre de noeuds tout en gardant un visualisation relativement lisible.

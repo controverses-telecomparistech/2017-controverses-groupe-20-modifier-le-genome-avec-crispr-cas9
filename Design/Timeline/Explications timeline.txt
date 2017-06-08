@@ -1,0 +1,8 @@
+Cette visualisation est une timeline relativement classique.
+La ligne verticale représente le temps qui s'écoule de haut en bas. Chaque point situé sur cette ligne représente un fait important. On peut y lire la date et une courte description. 
+
+La couleur du point permet de savoir si l'événement a eu pour conséquence de favoriser ou non le génie génétique, ou, dans une moindre mesure, de mieux encadrer les avancées dans ce domaine. 
+
+Les descriptions ne sont pas situées du même côté de la timeline si elles sont plutôt favorables ou défavorables au génie génétique.
+
+Cette visualisation permet difficelement d'avoir une vision globale des événements. On peut néanmoins regarder la proportion d'événements favorables et défavorables qui sont représentés. 

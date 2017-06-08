@@ -1,0 +1,9 @@
+Cette visualtion est un arbre. Elle a été choisie afin de représenter
+les liens existants entre les différents sujets prédominants dans le débat
+autour de CrispR-cas9. En effet, nous avons décidé de représenter d'utiliser cette représentation afin d'avoir une vue globale des différents points sensibles. Cette visualisation permet de discerner 3 grands axes principaux : "Législation, Utilisation et Développement"
+
+Les noeuds cliquables sont situés à la périphérie de la représentation (feuilles de l'arbre). Pour faciliter les interractions, ces noeuds ont été colorés en rouge. En cliquant sur ces noeuds, un court texte s'affiche pour obtenir plus d'informations sur le sujet dont l'intitulé est visible sur le noeud. Cela permet d'avoir une vue globale sans sur charger la visualisation.
+
+L'inconvénient principal est que cette visualisation est difficilement utilisable si le nombre de noeuds est trop grand. Les noeuds passent au premier plan avec un "mouse-over" si ils se chevauchent mais on perdrait les avantages d'une vision globale des sujets si la visualisation était surchargée.
+
+De plus, les liens entre les sujets ne forment pas nécessairement un arbre. Dans ce cas nous sommes obligés de supprimer certains liens entre les sujets ou bien de rendre la visualisation moins compréhensible en les conservants.
