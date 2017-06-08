@@ -1,0 +1,63 @@
+{
+ "name": "CrispR-cas9",
+ "children": [
+  {
+   "name":"UNESCO"
+  },
+  {
+   "name": "Ethique",
+   "children": [
+    {"name": "Comité d'éthique", "size": 17010}
+   ]
+  },
+  {
+   "name": "Gouvernement",
+   "children": [
+    {"name": "OPECST", "size": 1759},
+    {"name": "Conseil de l’Europe", "size": 2165},
+    {"name": "HCB", "size": 1759},
+    {"name": "CNDP", "size": 17010},
+    {"name": "Assemblée Nationale", "size": 17010},
+    {"name": "Sécurité", 
+      "children":[
+        {"name": "CIA", "size": 17010},
+        {"name": "SGDSN", "size": 17010},
+        {"name": "CNCB", "size": 17010}
+      ]
+    }
+   ]
+  },
+  {
+   "name": "Société",
+   "children": [
+    {"name": "Assoc. citoyenne",
+    "children": [
+    {"name": "Alliance Vita", "size": 17316}
+    ]
+    },
+    {"name": "Entreprise", 
+    "children":[
+      {"name": "Monsanto", "size": 17010}
+    ]
+  }
+    
+   ]
+  },
+  {
+   "name": "Santé",
+   "children": [
+    {"name": "NIH", "size": 8258},
+    {"name": "INSERM", "size": 10001},
+    {"name": "Greenpeace", "size": 8217}
+   ]
+  },
+  {
+   "name": "Science",
+   "children": [
+    {"name": "Charpentier & Doudna", "size": 16000},
+    {"name": "Communauté", "size": 1540},
+    {"name": "Académie", "size": 16540}
+   ]
+  }
+ ]
+}

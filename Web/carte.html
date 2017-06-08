@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Cartographie</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="css/freelancer.min.css" rel="stylesheet">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <style type="text/css">
+
+path.arc {
+  cursor: move;
+  color : #fff;
+}
+
+.node circle {
+  fill: #2C3E50;
+  stroke: #2C3E50;
+  stroke-width: 10px;
+  color : #fff;
+}
+
+.node {
+  font-size: 12px;
+  font-weight: bold;
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color :  #fff;
+  
+}
+
+.link {
+  fill: none;
+  stroke: #2C3E50;
+  stroke-width: 10px;
+}
+
+  
+
+    </style>
+
+</head>
+
+<body id="page-top" class="index" style="overflow:auto; height:100%" >
+    
+<div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
+
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="index.html">CRISPR-cas9</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="background-color: #2C3E50; color: white;"> Controverse<span class="caret"></span></a>
+
+                        <ul class="dropdown-menu">
+                            <li class="page-scroll">
+                                <a href="graphe.html">Arbre des débats</a>
+                            </li>
+                            <li class="page-scroll">
+                                <a href="timeline.html">Chronologie</a>
+                            </li>
+                            <li class="page-scroll">
+                                <a href="carte.html">Carte des acteurs</a>
+                            </li>
+                            
+
+                        </ul>
+                    </li><li class="page-scroll">
+                        <a href="enjeux.html">Enjeux</a>
+                    </li>
+                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="background-color: #2C3E50; color: white;"> Pour Aller plus loin<span class="caret"></span></a>
+
+                        <ul class="dropdown-menu">
+                            <li class="page-scroll">
+                                <a href="societe.html">Société civile</a>
+                            </li>
+                            <li class="page-scroll">
+                                <a href="politique.html">Politique et droit</a>
+                            </li>
+                            <li class="page-scroll">
+                                <a href="expertise.html">Expertise scientifique</a>
+                            </li>
+                            <li class="page-scroll">
+                                <a href="presse.html">Presse et média</a>
+                            </li>
+                            <li class="page-scroll">
+                                <a href="entretien.html">Entretiens</a>
+                            </li>
+                            
+
+                        </ul>
+                    </li>
+                    
+
+                    <li class="page-scroll">
+                        <a href="about.html">À propos</a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <!-- Header -->
+    <header>
+        <div class="container" id="maincontent" tabindex="-1">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-text">
+                        <h1>Carte des acteurs</h1>
+                    </div>
+                    <img class="img-responsive" src="img/portfolio/group1.png" alt="" height="150px" width="150px">
+                </div>
+            </div>
+        </div>
+
+
+    </header>
+    
+    <!-- end of Header -->
+    
+    <!-- Modal -->
+    <div id="GSCCModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;  </button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+        </div>
+        <div class="modal-body" id="modal-body">
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+        </div>  
+    </div>
+    
+    <!-- end of Modal-->
+
+    <!--Map -->
+    <div class="container" style="color:#2C3E50;padding-top: 50px">
+    <p>Cliquez sur les acteurs aux extrémités pour obtenir plus d'informations. Tirez sur le disque pour le faire tourner</p>
+    </div>
+    <div class="container">
+        <div id="svg" style="padding-top : 20px"></div>
+    </div>
+    <script type="text/javascript" src="Actors_map/d3/d3.js"></script>
+    <script type="text/javascript" src="Actors_map/d3/d3.layout.js"></script>
+    <script type="text/javascript" src="d3/d3.min.js"></script>
+    <script type="text/javascript" src="Actors_map/packages.js"></script>
+    <link type="text/css" rel="stylesheet" href="Actors_map/style.css"/>
+    
+    
+    <script type="text/javascript">
+        
+var w = screen.width*0.8,
+    h = screen.height*0.8,
+    rx = w / 2,
+    ry = h / 2,
+    m0,
+    rotate = 0;
+
+var cluster = d3.layout.cluster()
+    .size([360, ry - 120])
+    .sort(null);
+
+var diagonal = d3.svg.diagonal.radial()
+    .projection(function(d) {if(d.children){return [ d.y*0.7, d.x / 180 * Math.PI]; } else {return [ d.y, d.x / 180 * Math.PI]; }});
+        
+var svg = d3.select("#svg").style("width", "100%")
+    .style("height",960)
+    .style("background-color", "#fff")
+    .style("display","block");
+
+var vis = svg.append("svg:svg")
+    .attr("width", w)
+    .attr("height", 860)
+  .append("svg:g")
+    .attr("transform", "translate(" + rx + "," + (ry+70) + ")");
+
+vis.append("svg:path")
+    .attr("class", "arc")
+    .style("fill","#2C3E50")
+    .attr("d", d3.svg.arc().innerRadius(ry +30).outerRadius(ry+70).startAngle(0).endAngle(2 * Math.PI))
+    .on("mousedown", mousedown);
+        
+vis.append("svg:path")
+    .attr("class", "arc")
+    .style("fill","#e04f5f")
+    .attr("d", d3.svg.arc().innerRadius(0).outerRadius(ry+20).startAngle(0).endAngle(2 * Math.PI))
+    .on("mousedown", mousedown);
+        
+var actors_number = 0;
+
+d3.json("Actors_map/actors.json", function(json) {
+  var nodes = cluster.nodes(json);
+
+  var link = vis.selectAll("path.link")
+      .data(cluster.links(nodes))
+    .enter().append("svg:path")
+      .attr("class", "link")
+      .attr("d", diagonal);
+
+  var node = vis.selectAll("g.node")
+      .data(nodes)
+    .enter().append("svg:g")
+      .attr("class", "node")
+      .attr("transform", function(d) {if (d.children){return "rotate(" + (d.x - 90) + ")translate(" + d.y*0.7 + ")"; } else { return "rotate(" + (d.x - 90) + ")translate(" + d.y+ ")"; }})
+
+  node.append("svg:circle")
+      .attr("r", 3);
+
+  node.append("svg:text")
+      .attr("dx", function(d) { return d.x < 180 ? 8 : -8; })
+      .attr("dy", ".31em")
+      .style("cursor","pointer") 
+      .attr("text-anchor", function(d) {return d.x < 180 ? "start" : "end"; })
+      .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })
+      .style("pointer-events",function(d) {if(d.children){return "none"}
+                                 else{return  "auto"}})
+      .attr("data-toggle","modal")
+      .attr("data-target","#GSCCModal")
+      .on("click",updateModalContent)
+      .style("fill",function(d) {if(d.children){ if(d.name=="CrispR-cas9")
+                                {return "#1ceac1"}else{return "white"}}
+                                 else{actors_number++;
+                                    return  "#ffffa0"}})
+      .html(function(d) {return d.name});
+});
+
+d3.select(window)
+    .on("mousemove", mousemove)
+    .on("mouseup", mouseup);
+
+function mouse(e) {
+  return [e.pageX - rx, e.pageY - ry];
+}
+
+function mousedown() {
+  m0 = mouse(d3.event);
+  d3.event.preventDefault();
+}
+
+function mousemove() {
+  if (m0) {
+    var m1 = mouse(d3.event),
+        dm = Math.atan2(cross(m0, m1), dot(m0, m1)) * 180 / Math.PI,
+        tx = "translate3d(0," + (ry - rx) + "px,0)rotate3d(0,0,0," + dm + "deg)translate3d(0," + (rx - ry) + "px,0)";
+    svg
+        .style("-moz-transform", tx)
+        .style("-ms-transform", tx)
+        .style("-webkit-transform", tx);
+  }
+}
+        
+function updateModalContent(d){
+    console.log("update");
+    console.log(d);
+    d3.text("Actors_map/carte_acteurs1.txt", function(data) {
+                var psv = d3.dsvFormat(";");
+                var parsedCSV = psv.parseRows(data);
+                var actor = -1;
+                for(var j =1;j<actors_number+1;j++){
+                    if(parsedCSV[1][j]==d.name){
+                        actor = j;
+                    }
+                }
+                
+                var container = d3.select("#modal-body");
+                var label = d3.select("#myModalLabel")
+                                .style("color","#2C3E50")
+                
+                container.selectAll("*").remove();
+                if(actor==-1){
+                    label.html("");
+                    return;
+                } else {label.html(parsedCSV[1][actor])};
+                
+                var n = parsedCSV.length;
+                for(var i = 2;i<n;i++){
+                    if(parsedCSV[i][actor].length!=0)
+                    var line = container.append("p")
+                                .style("color","#2C3E50")
+                                .html("<strong>"+parsedCSV[i][0]+"</strong> : "+parsedCSV[i][actor]);
+                }
+            });
+}
+
+function mouseup() {
+  if (m0) {
+    var m1 = mouse(d3.event),
+        dm = Math.atan2(cross(m0, m1), dot(m0, m1)) * 180 / Math.PI,
+        tx = "rotate3d(0,0,0,0deg)";
+
+    rotate += dm;
+    if (rotate > 360) rotate -= 360;
+    else if (rotate < 0) rotate += 360;
+    m0 = null;
+
+    svg
+        .style("-moz-transform", tx)
+        .style("-ms-transform", tx)
+        .style("-webkit-transform", tx);
+
+    vis
+        .attr("transform", "translate(" + rx + "," + (ry+70) + ")rotate(" + rotate + ")")
+      .selectAll("g.node text")
+        .attr("dx", function(d) { return (d.x + rotate) % 360 < 180 ? 8 : -8; })
+        .attr("text-anchor", function(d) { return (d.x + rotate) % 360 < 180 ? "start" : "end"; })
+        .attr("transform", function(d) { return (d.x + rotate) % 360 < 180 ? null : "rotate(180)"; });
+  }
+}
+
+function cross(a, b) {
+  return a[0] * b[1] - a[1] * b[0];
+}
+
+function dot(a, b) {
+  return a[0] * b[0] + a[1] * b[1];
+}
+
+
+    </script>
+        
+    <!-- end of map-->   
+    
+    
+    
+    <!-- Footer -->
+    <footer class="text-center;" >
+        <div class="footer-below" style="text-align: center">
+                Site developpé dans le cadre du projet ETIC de Télécom Paristech
+        </div>
+    </footer>
+
+    <!-- /Footer -->
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/freelancer.min.js"></script>
+
+</body>
+
+</html>
